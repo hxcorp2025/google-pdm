@@ -6,8 +6,18 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="format-detection" content="telephone=no">
   <title>Pix do Milhão</title>
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-MW7J95TB');</script>
+  <!-- End Google Tag Manager -->
+  
   <link rel="preconnect" href="https://pixdomilhao.com.br">
   <link rel="preconnect" href="https://api.ipify.org">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
   <link rel="dns-prefetch" href="https://n8n-n8n.sf6dqo.easypanel.host">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -47,8 +57,6 @@
     .loading.show{display:block}
     .loading span{animation:pulse 1s infinite}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-    
-    /* Footer discreto estilo site profissional */
     .footer{width:100%;background:#1a1a1a;padding:20px 16px;padding-bottom:max(20px,env(safe-area-inset-bottom))}
     .footer-content{max-width:600px;margin:0 auto;text-align:center}
     .footer-seal{margin-bottom:10px;opacity:.6}
@@ -58,12 +66,15 @@
     .footer-links a{color:#777;text-decoration:none;margin:0 8px}
     .footer-links a:hover{color:#999;text-decoration:underline}
     .footer-copy{font-size:8px;color:#444}
-    
     @media(min-width:480px){.container{padding:0 20px}.btn{padding:18px 44px}.phone-input{font-size:26px}}
     @media(prefers-reduced-motion:reduce){.step,.loading span{animation:none}}
   </style>
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MW7J95TB" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <div class="main">
     <div class="container">
       <div class="logo">
@@ -137,26 +148,57 @@
   </footer>
 
   <script>
+    // DataLayer init
+    window.dataLayer = window.dataLayer || [];
+    
+    // Evento: viewpage (quando carrega a página)
+    dataLayer.push({
+      'event': 'viewpage',
+      'page_title': document.title,
+      'page_location': window.location.href
+    });
+    
     var D={conhece:null,pronto:null,whatsapp:null,utms:{},ua:navigator.userAgent,ip:null,ts:null};
+    var quizStarted = false; // Flag para disparar start_quiz só uma vez
+    
     new URLSearchParams(location.search).forEach(function(v,k){D.utms[k]=v});
     fetch('https://api.ipify.org?format=json').then(function(r){return r.json()}).then(function(d){D.ip=d.ip}).catch(function(){D.ip='n/a'});
+    
     var ph=document.getElementById('phone'),er=document.getElementById('error'),ld=document.getElementById('loading');
+    
     ph.addEventListener('input',function(e){
       var v=e.target.value.replace(/\D/g,'').slice(0,11);
       e.target.value=v.length?v.length<=2?'('+v:'('+v.slice(0,2)+') '+v.slice(2):'';
     });
+    
     function show(n){
       document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active')});
       document.querySelector('.step[data-step="'+n+'"]').classList.add('active');
       if(n<=4)document.querySelector('.progress-dot[data-step="'+n+'"]').classList.add('active');
       if(n===5)document.querySelector('.progress').style.display='none';
     }
-    function next(c,k,v){D[k]=v;show(c+1)}
+    
+    function next(c,k,v){
+      // Evento: start_quiz (apenas no primeiro clique)
+      if(!quizStarted){
+        quizStarted = true;
+        dataLayer.push({
+          'event': 'start_quiz',
+          'quiz_step': 1,
+          'quiz_answer': v
+        });
+      }
+      
+      D[k]=v;
+      show(c+1);
+    }
+    
     function validatePhone(){
       var v=ph.value.replace(/\D/g,'');
       if(v.length<10||v.length>11){er.style.display='block';ph.style.borderColor='#d32f2f';return}
       er.style.display='none';ph.style.borderColor='#F7B500';D.whatsapp=v;show(4);
     }
+    
     function send(){
       ld.classList.add('show');
       D.ts=new Date().toISOString();
@@ -168,10 +210,21 @@
         fetch('https://n8n-n8n.sf6dqo.easypanel.host/webhook/quiz-google',{method:'POST',headers:{'Content-Type':'application/json'},mode:'no-cors',body:payload}).finally(function(){show(5)});
       }
     }
+    
     function go(){
-      var p=new URLSearchParams(D.utms);
-      p.set('reseller_slug','diegorox2');
-      location.href='https://pixdomilhao.com.br/?'+p.toString();
+      // Evento: click_to_checkout (antes de redirecionar)
+      dataLayer.push({
+        'event': 'click_to_checkout',
+        'quiz_completed': true,
+        'whatsapp_captured': D.whatsapp ? true : false
+      });
+      
+      // Pequeno delay para garantir que o evento seja enviado antes do redirect
+      setTimeout(function(){
+        var p=new URLSearchParams(D.utms);
+        p.set('reseller_slug','diegorox2');
+        location.href='https://pixdomilhao.com.br/?'+p.toString();
+      }, 150);
     }
   </script>
 </body>
