@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="format-detection" content="telephone=no">
+  <title>Pix do Milhão</title>
+  <link rel="preconnect" href="https://pixdomilhao.com.br">
+  <link rel="preconnect" href="https://api.ipify.org">
+  <link rel="dns-prefetch" href="https://n8n-n8n.sf6dqo.easypanel.host">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+    html{font-size:16px;-webkit-text-size-adjust:100%}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;padding:env(safe-area-inset-top) 16px env(safe-area-inset-bottom);touch-action:manipulation}
+    .main{flex:1;display:flex;justify-content:center;align-items:center;width:100%;padding:20px 0}
+    .container{width:100%;max-width:400px;text-align:center}
+    .logo{margin-bottom:24px}
+    .logo h1{font-size:clamp(24px,6vw,28px);font-weight:800;color:#000}
+    .logo h1 span{color:#F7B500}
+    .logo p{font-size:13px;color:#666;margin-top:4px}
+    .step{display:none;animation:fadeIn .25s ease}
+    .step.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .progress{display:flex;gap:8px;justify-content:center;margin-bottom:24px}
+    .progress-dot{width:10px;height:10px;border-radius:50%;background:#e0e0e0;transition:background .2s,box-shadow .2s}
+    .progress-dot.active{background:#F7B500;box-shadow:0 0 8px rgba(247,181,0,.5)}
+    .question{color:#000;font-size:clamp(18px,5vw,20px);font-weight:600;margin-bottom:24px;line-height:1.4}
+    .buttons{display:flex;gap:12px;justify-content:center}
+    .btn{min-height:52px;min-width:100px;padding:14px 32px;font-size:16px;font-weight:700;border:none;border-radius:12px;cursor:pointer;transition:transform .15s,box-shadow .15s;text-transform:uppercase;-webkit-appearance:none;appearance:none}
+    .btn:active{transform:scale(.97)}
+    .btn-yes{background:#F7B500;color:#000}
+    .btn-yes:hover{box-shadow:0 4px 16px rgba(247,181,0,.4)}
+    .btn-no{background:#f5f5f5;color:#666;border:1px solid #e0e0e0}
+    .btn-no:hover{background:#eee;color:#333}
+    .btn-full{width:100%;min-height:56px;padding:16px;font-size:17px}
+    .input-group{margin-bottom:20px}
+    .phone-input{width:100%;height:60px;padding:0 20px;font-size:22px;font-weight:600;text-align:center;background:#f9f9f9;border:2px solid #e0e0e0;border-radius:12px;color:#000;outline:none;transition:border-color .15s,background .15s;letter-spacing:2px;-webkit-appearance:none;appearance:none}
+    .phone-input:focus{border-color:#F7B500;background:#fff}
+    .phone-input::placeholder{color:#bbb;font-weight:400;letter-spacing:0}
+    .bonus-screen .icon{font-size:56px;margin-bottom:16px}
+    .bonus-screen .title{color:#000;font-size:22px;font-weight:700;margin-bottom:8px}
+    .bonus-screen .highlight{color:#F7B500;font-size:clamp(24px,6vw,28px);font-weight:800;display:block;margin-bottom:20px}
+    .bonus-screen .subtitle{color:#666;font-size:14px;margin-bottom:24px}
+    .error-msg{color:#d32f2f;font-size:13px;margin-top:8px;display:none}
+    .loading{display:none;color:#F7B500;font-size:14px;margin-top:12px}
+    .loading.show{display:block}
+    .loading span{animation:pulse 1s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+    .footer{width:100%;max-width:440px;margin:0 auto;padding:24px 8px;text-align:center}
+    .seal{margin-bottom:12px}
+    .seal img{height:36px;opacity:.85}
+    .disclaimer{font-size:10px;color:#999;line-height:1.6}
+    .disclaimer p{margin-bottom:6px}
+    @media(min-width:480px){.container{padding:0 20px}.btn{padding:16px 40px}.phone-input{font-size:24px}}
+    @media(prefers-reduced-motion:reduce){.step,.loading span{animation:none}}
+  </style>
+</head>
+<body>
+  <div class="main">
+    <div class="container">
+      <div class="logo">
+        <h1>PIX DO <span>MILHÃO</span></h1>
+        <p>Sua chance toda semana</p>
+      </div>
+      
+      <div class="progress" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4">
+        <div class="progress-dot active" data-step="1"></div>
+        <div class="progress-dot" data-step="2"></div>
+        <div class="progress-dot" data-step="3"></div>
+        <div class="progress-dot" data-step="4"></div>
+      </div>
+      
+      <div class="step active" data-step="1">
+        <p class="question">ANTES DE CONTINUARMOS<br>Você conhece o Pix do Milhão?</p>
+        <div class="buttons">
+          <button class="btn btn-yes" onclick="next(1,'conhece','sim')">SIM</button>
+          <button class="btn btn-no" onclick="next(1,'conhece','nao')">NÃO</button>
+        </div>
+      </div>
+      
+      <div class="step" data-step="2">
+        <p class="question">Você estaria pronto para<br>ser o Sorteado?</p>
+        <div class="buttons">
+          <button class="btn btn-yes" onclick="next(2,'pronto','sim')">SIM</button>
+          <button class="btn btn-no" onclick="next(2,'pronto','nao')">NÃO</button>
+        </div>
+      </div>
+      
+      <div class="step" data-step="3">
+        <p class="question">Qual seu WhatsApp<br>para caso seja você?</p>
+        <div class="input-group">
+          <input type="tel" class="phone-input" id="phone" placeholder="(00) 000000000" inputmode="numeric" maxlength="15" autocomplete="tel">
+          <p class="error-msg" id="error">Digite um número válido com DDD</p>
+        </div>
+        <button class="btn btn-yes btn-full" onclick="validatePhone()">CONTINUAR</button>
+      </div>
+      
+      <div class="step" data-step="4">
+        <p class="question">Para comprar seus pontos<br>continue pelo botão abaixo</p>
+        <button class="btn btn-yes btn-full" onclick="send()">CONTINUAR</button>
+        <p class="loading" id="loading"><span>Preparando sua oferta...</span></p>
+      </div>
+      
+      <div class="step bonus-screen" data-step="5">
+        <div class="icon">🎉</div>
+        <p class="title">PARABÉNS!</p>
+        <span class="highlight">CHANCES EM DOBRO</span>
+        <p class="subtitle">Siga abaixo para garantir seu bônus exclusivo!</p>
+        <button class="btn btn-yes btn-full" onclick="go()">GARANTIR CHANCES EM DOBRO</button>
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+    <div class="seal">
+      <img src="https://i.postimg.cc/9QKBqKBY/seal-google-safe-browsing-BOx6Vl9C.png" alt="Google Safe Browsing" width="120" height="36" loading="lazy">
+    </div>
+    <div class="disclaimer">
+      <p>Este site é apenas uma plataforma de entretenimento e não possui qualquer vínculo com instituições financeiras, bancos, ou órgãos governamentais. Não realizamos operações financeiras, empréstimos, investimentos ou qualquer tipo de transação bancária.</p>
+      <p>O Pix do Milhão é um título de capitalização da modalidade filantropia premiável, devidamente autorizado e regulamentado pela SUSEP (Superintendência de Seguros Privados). A participação é voluntária e destina-se exclusivamente a maiores de 18 anos.</p>
+      <p>Ao continuar, você declara ter lido e concordado com os Termos de Uso e Política de Privacidade. Jogue com responsabilidade.</p>
+    </div>
+  </footer>
+
+  <script>
+    var D={conhece:null,pronto:null,whatsapp:null,utms:{},ua:navigator.userAgent,ip:null,ts:null};
+    
+    // Captura TODOS os params da URL (não só os listados)
+    new URLSearchParams(location.search).forEach(function(v,k){D.utms[k]=v});
+    
+    // IP async não-bloqueante
+    fetch('https://api.ipify.org?format=json').then(function(r){return r.json()}).then(function(d){D.ip=d.ip}).catch(function(){D.ip='n/a'});
+    
+    var ph=document.getElementById('phone'),er=document.getElementById('error'),ld=document.getElementById('loading');
+    
+    ph.addEventListener('input',function(e){
+      var v=e.target.value.replace(/\D/g,'').slice(0,11);
+      e.target.value=v.length?v.length<=2?'('+v:'('+v.slice(0,2)+') '+v.slice(2):'';
+    });
+    
+    function show(n){
+      document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active')});
+      document.querySelector('.step[data-step="'+n+'"]').classList.add('active');
+      if(n<=4)document.querySelector('.progress-dot[data-step="'+n+'"]').classList.add('active');
+      if(n===5)document.querySelector('.progress').style.display='none';
+    }
+    
+    function next(c,k,v){D[k]=v;show(c+1)}
+    
+    function validatePhone(){
+      var v=ph.value.replace(/\D/g,'');
+      if(v.length<10||v.length>11){er.style.display='block';ph.style.borderColor='#d32f2f';return}
+      er.style.display='none';ph.style.borderColor='#F7B500';D.whatsapp=v;show(4);
+    }
+    
+    function send(){
+      ld.classList.add('show');
+      D.ts=new Date().toISOString();
+      
+      // Usa sendBeacon se disponível (mais confiável), senão fetch
+      var payload=JSON.stringify(D);
+      if(navigator.sendBeacon){
+        navigator.sendBeacon('https://n8n-n8n.sf6dqo.easypanel.host/webhook/quiz-google',new Blob([payload],{type:'application/json'}));
+        setTimeout(function(){show(5)},400);
+      }else{
+        fetch('https://n8n-n8n.sf6dqo.easypanel.host/webhook/quiz-google',{method:'POST',headers:{'Content-Type':'application/json'},mode:'no-cors',body:payload}).finally(function(){show(5)});
+      }
+    }
+    
+    function go(){
+      var p=new URLSearchParams(D.utms);
+      p.set('reseller_slug','diegorox2');
+      location.href='https://pixdomilhao.com.br/?'+p.toString();
+    }
+  </script>
+</body>
+</html>
