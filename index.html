@@ -6,6 +6,8 @@
   <meta name="theme-color" content="#ffffff">
   <meta name="format-detection" content="telephone=no">
   <title>Pix do Milhão</title>
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/BQSKMGS6/unnamed.png">
+  <link rel="apple-touch-icon" href="https://i.postimg.cc/BQSKMGS6/unnamed.png">
   
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -16,15 +18,15 @@
   <!-- End Google Tag Manager -->
   
   <link rel="preconnect" href="https://pixdomilhao.com.br">
-  <link rel="preconnect" href="https://api.ipify.org">
   <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://api.ipify.org">
   <link rel="dns-prefetch" href="https://n8n-n8n.sf6dqo.easypanel.host">
   <style>
     *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
     html{font-size:16px;-webkit-text-size-adjust:100%}
     body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:#fff;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;touch-action:manipulation}
     .main{flex:1;display:flex;justify-content:center;align-items:center;width:100%;padding:40px 20px 60px;padding-top:max(40px,env(safe-area-inset-top))}
-    .container{width:100%;max-width:400px;text-align:center}
+    .container{width:100%;max-width:420px;text-align:center}
     .logo{margin-bottom:32px}
     .logo h1{font-size:clamp(26px,7vw,32px);font-weight:800;color:#000;letter-spacing:-0.5px}
     .logo h1 span{color:#F7B500}
@@ -35,7 +37,7 @@
     .progress{display:flex;gap:10px;justify-content:center;margin-bottom:32px}
     .progress-dot{width:12px;height:12px;border-radius:50%;background:#e0e0e0;transition:background .2s,box-shadow .2s}
     .progress-dot.active{background:#F7B500;box-shadow:0 0 10px rgba(247,181,0,.5)}
-    .question{color:#000;font-size:clamp(20px,5.5vw,24px);font-weight:700;margin-bottom:28px;line-height:1.35}
+    .question{color:#000;font-size:clamp(18px,5vw,22px);font-weight:700;margin-bottom:28px;line-height:1.35}
     .buttons{display:flex;gap:14px;justify-content:center}
     .btn{min-height:56px;min-width:110px;padding:16px 36px;font-size:17px;font-weight:700;border:none;border-radius:14px;cursor:pointer;transition:transform .15s,box-shadow .15s;text-transform:uppercase;-webkit-appearance:none;appearance:none}
     .btn:active{transform:scale(.97)}
@@ -44,19 +46,31 @@
     .btn-no{background:#f5f5f5;color:#555;border:1px solid #ddd}
     .btn-no:hover{background:#eee;color:#333}
     .btn-full{width:100%;min-height:58px;padding:18px;font-size:18px}
-    .input-group{margin-bottom:22px}
-    .phone-input{width:100%;height:64px;padding:0 20px;font-size:24px;font-weight:600;text-align:center;background:#f9f9f9;border:2px solid #e0e0e0;border-radius:14px;color:#000;outline:none;transition:border-color .15s,background .15s;letter-spacing:2px;-webkit-appearance:none;appearance:none}
-    .phone-input:focus{border-color:#F7B500;background:#fff}
-    .phone-input::placeholder{color:#bbb;font-weight:400;letter-spacing:0}
-    .bonus-screen .icon{font-size:64px;margin-bottom:20px}
-    .bonus-screen .title{color:#000;font-size:24px;font-weight:700;margin-bottom:10px}
-    .bonus-screen .highlight{color:#F7B500;font-size:clamp(26px,7vw,32px);font-weight:800;display:block;margin-bottom:24px}
-    .bonus-screen .subtitle{color:#666;font-size:15px;margin-bottom:28px}
-    .error-msg{color:#d32f2f;font-size:13px;margin-top:10px;display:none}
-    .loading{display:none;color:#F7B500;font-size:14px;margin-top:14px}
-    .loading.show{display:block}
-    .loading span{animation:pulse 1s infinite}
-    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+    .prizes-container{margin-bottom:24px}
+    .prizes-grid{display:flex;justify-content:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+    .prize-card{background:linear-gradient(135deg,#1a1a1a 0%,#2d2d2d 100%);border-radius:14px;padding:16px 14px;min-width:100px;flex:1;max-width:120px;border:2px solid #F7B500;box-shadow:0 4px 15px rgba(247,181,0,.2)}
+    .prize-day{color:#F7B500;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px}
+    .prize-value{color:#fff;font-size:clamp(16px,4vw,20px);font-weight:800}
+    .prizes-extra{color:#666;font-size:13px;line-height:1.4;margin-top:16px;padding:0 10px}
+    .prizes-extra strong{color:#F7B500}
+    .loading-screen{padding:40px 20px}
+    .loader{width:60px;height:60px;border:4px solid #f0f0f0;border-top-color:#F7B500;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 24px}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .loading-text{color:#333;font-size:16px;font-weight:500}
+    .bonus-screen .icon{font-size:64px;margin-bottom:16px}
+    .bonus-screen .title{color:#000;font-size:20px;font-weight:600;margin-bottom:8px}
+    .bonus-screen .highlight{color:#F7B500;font-size:clamp(28px,8vw,36px);font-weight:800;display:block;margin-bottom:20px;text-shadow:0 2px 10px rgba(247,181,0,.3)}
+    .bonus-screen .timer-text{color:#666;font-size:14px;margin-bottom:8px}
+    .bonus-screen .timer{color:#000;font-size:32px;font-weight:800;margin-bottom:20px;font-variant-numeric:tabular-nums}
+    .bonus-screen .subtitle{color:#666;font-size:14px;margin-bottom:24px}
+    .popup-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;justify-content:center;align-items:center;padding:20px}
+    .popup-overlay.show{display:flex}
+    .popup{background:#fff;border-radius:20px;padding:32px 24px;max-width:360px;width:100%;text-align:center;animation:popIn .3s ease}
+    @keyframes popIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+    .popup-icon{font-size:48px;margin-bottom:16px}
+    .popup-title{color:#000;font-size:22px;font-weight:800;margin-bottom:8px}
+    .popup-highlight{color:#F7B500;font-size:26px;font-weight:800;display:block;margin-bottom:12px}
+    .popup-text{color:#666;font-size:14px;margin-bottom:24px}
     .footer{width:100%;background:#1a1a1a;padding:20px 16px;padding-bottom:max(20px,env(safe-area-inset-bottom))}
     .footer-content{max-width:600px;margin:0 auto;text-align:center}
     .footer-seal{margin-bottom:10px;opacity:.6}
@@ -65,15 +79,30 @@
     .footer-links{font-size:9px;color:#555;margin-bottom:6px}
     .footer-links a{color:#777;text-decoration:none;margin:0 8px}
     .footer-links a:hover{color:#999;text-decoration:underline}
+    .footer-contact{font-size:10px;color:#888;line-height:1.6;margin-bottom:10px}
+    .footer-contact strong{color:#aaa}
+    .footer-contact a{color:#888;text-decoration:none}
+    .footer-contact a:hover{color:#F7B500}
     .footer-copy{font-size:8px;color:#444}
-    @media(min-width:480px){.container{padding:0 20px}.btn{padding:18px 44px}.phone-input{font-size:26px}}
-    @media(prefers-reduced-motion:reduce){.step,.loading span{animation:none}}
+    @media(min-width:480px){.container{padding:0 20px}.btn{padding:18px 44px}.prize-card{min-width:110px;padding:18px 16px}}
+    @media(max-width:360px){.prizes-grid{gap:8px}.prize-card{min-width:90px;padding:14px 10px}.prize-day{font-size:10px}.prize-value{font-size:15px}}
+    @media(prefers-reduced-motion:reduce){.step,.popup,.loader{animation:none}}
   </style>
 </head>
 <body>
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MW7J95TB" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
+
+  <div class="popup-overlay" id="exitPopup">
+    <div class="popup">
+      <div class="popup-icon">⏰</div>
+      <div class="popup-title">ESPERE!</div>
+      <span class="popup-highlight">CHANCES EM DOBRO</span>
+      <p class="popup-text">Não perca essa chance exclusiva!</p>
+      <button class="btn btn-yes btn-full" onclick="goCheckout('exit_popup')">GARANTIR CHANCES EM DOBRO</button>
+    </div>
+  </div>
 
   <div class="main">
     <div class="container">
@@ -82,11 +111,10 @@
         <p>Sua chance toda semana</p>
       </div>
       
-      <div class="progress" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="4">
+      <div class="progress" id="progress" role="progressbar">
         <div class="progress-dot active" data-step="1"></div>
         <div class="progress-dot" data-step="2"></div>
         <div class="progress-dot" data-step="3"></div>
-        <div class="progress-dot" data-step="4"></div>
       </div>
       
       <div class="step active" data-step="1">
@@ -98,34 +126,47 @@
       </div>
       
       <div class="step" data-step="2">
-        <p class="question">Você estaria pronto para<br>ser o Sorteado?</p>
+        <p class="question">Você já conhece os benefícios<br>de cada dia da semana?</p>
         <div class="buttons">
-          <button class="btn btn-yes" onclick="next(2,'pronto','sim')">SIM</button>
-          <button class="btn btn-no" onclick="next(2,'pronto','nao')">NÃO</button>
+          <button class="btn btn-yes" onclick="next(2,'beneficios','sim')">SIM</button>
+          <button class="btn btn-no" onclick="next(2,'beneficios','nao')">NÃO</button>
         </div>
       </div>
       
       <div class="step" data-step="3">
-        <p class="question">Qual seu WhatsApp<br>para caso seja você?</p>
-        <div class="input-group">
-          <input type="tel" class="phone-input" id="phone" placeholder="(00) 000000000" inputmode="numeric" maxlength="15" autocomplete="tel">
-          <p class="error-msg" id="error">Digite um número válido com DDD</p>
+        <div class="prizes-container">
+          <div class="prizes-grid">
+            <div class="prize-card">
+              <div class="prize-day">Segunda-feira</div>
+              <div class="prize-value">R$100 MIL</div>
+            </div>
+            <div class="prize-card">
+              <div class="prize-day">Quarta-feira</div>
+              <div class="prize-value">R$100 MIL</div>
+            </div>
+            <div class="prize-card">
+              <div class="prize-day">Sexta-feira</div>
+              <div class="prize-value">R$1 MILHÃO</div>
+            </div>
+          </div>
+          <p class="prizes-extra">E milhares de chances instantâneas no<br><strong>Raspou, Achou é PIX!</strong></p>
         </div>
-        <button class="btn btn-yes btn-full" onclick="validatePhone()">CONTINUAR</button>
+        <button class="btn btn-yes btn-full" onclick="showLoading()">GARANTIR MINHA CHANCE</button>
       </div>
       
-      <div class="step" data-step="4">
-        <p class="question">Para comprar seus pontos<br>continue pelo botão abaixo</p>
-        <button class="btn btn-yes btn-full" onclick="send()">CONTINUAR</button>
-        <p class="loading" id="loading"><span>Preparando sua oferta...</span></p>
+      <div class="step loading-screen" data-step="4">
+        <div class="loader"></div>
+        <p class="loading-text">Aguarde, estamos preparando<br>as suas chances...</p>
       </div>
       
       <div class="step bonus-screen" data-step="5">
         <div class="icon">🎉</div>
-        <p class="title">PARABÉNS!</p>
+        <p class="title">Parabéns! Você ganhou:</p>
         <span class="highlight">CHANCES EM DOBRO</span>
+        <p class="timer-text">Durante esse tempo:</p>
+        <div class="timer" id="timer">04:59</div>
         <p class="subtitle">Siga abaixo para garantir seu bônus exclusivo!</p>
-        <button class="btn btn-yes btn-full" onclick="go()">GARANTIR CHANCES EM DOBRO</button>
+        <button class="btn btn-yes btn-full" onclick="goCheckout('bonus_screen')">GARANTIR CHANCES EM DOBRO</button>
       </div>
     </div>
   </div>
@@ -138,93 +179,147 @@
       <p class="footer-text">
         Este site é uma plataforma de entretenimento e não possui vínculo com instituições financeiras, bancos ou órgãos governamentais. Não realizamos operações financeiras ou transações bancárias. O Pix do Milhão é um título de capitalização da modalidade filantropia premiável, autorizado pela SUSEP. Participação voluntária, exclusiva para maiores de 18 anos. Jogue com responsabilidade.
       </p>
+      <p class="footer-contact">
+        <strong>PIX DO MILHÃO</strong> — CNPJ: 30.682.309/0001-70<br>
+        SAC ViaCap: <a href="tel:+555133033851">(51) 3303-3851</a> | <a href="mailto:suporte@pixdomilhaovip.com">suporte@pixdomilhaovip.com</a>
+      </p>
       <div class="footer-links">
-        <a href="#">Termos de Uso</a>
-        <a href="#">Política de Privacidade</a>
-        <a href="#">Jogo Responsável</a>
+        <a href="https://l.pixdomilhaovip.com/termos">Termos de Uso</a>
+        <a href="https://l.pixdomilhaovip.com/politica-de-privacidade">Política de Privacidade</a>
+        <a href="https://l.pixdomilhaovip.com/termos">Política de Reembolso</a>
+        <a href="https://l.pixdomilhaovip.com/jogo-responsavel">Jogo Responsável</a>
       </div>
       <p class="footer-copy">© 2025 Pix do Milhão. Todos os direitos reservados.</p>
     </div>
   </footer>
 
   <script>
-    // DataLayer init
     window.dataLayer = window.dataLayer || [];
     
-    // Evento: viewpage (quando carrega a página)
-    dataLayer.push({
-      'event': 'viewpage',
-      'page_title': document.title,
-      'page_location': window.location.href
-    });
+    var WEBHOOK = 'https://n8n-n8n.sf6dqo.easypanel.host/webhook/quiz-google';
+    var D = {conhece:null, beneficios:null, utms:{}, ua:navigator.userAgent, ip:null, session_id:null};
+    var quizStarted = false;
+    var popupShown = false;
     
-    var D={conhece:null,pronto:null,whatsapp:null,utms:{},ua:navigator.userAgent,ip:null,ts:null};
-    var quizStarted = false; // Flag para disparar start_quiz só uma vez
+    // Session ID único
+    D.session_id = 'ses_' + Date.now() + '_' + Math.random().toString(36).substr(2,9);
     
+    // Captura UTMs
     new URLSearchParams(location.search).forEach(function(v,k){D.utms[k]=v});
+    
+    // IP async
     fetch('https://api.ipify.org?format=json').then(function(r){return r.json()}).then(function(d){D.ip=d.ip}).catch(function(){D.ip='n/a'});
     
-    var ph=document.getElementById('phone'),er=document.getElementById('error'),ld=document.getElementById('loading');
+    // Envia evento pro webhook
+    function track(event, extra) {
+      var payload = {
+        event: event,
+        session_id: D.session_id,
+        timestamp: new Date().toISOString(),
+        page_url: location.href,
+        user_agent: D.ua,
+        ip: D.ip,
+        utms: D.utms,
+        quiz_data: {conhece: D.conhece, beneficios: D.beneficios}
+      };
+      
+      if (extra) {
+        for (var k in extra) payload[k] = extra[k];
+      }
+      
+      // DataLayer
+      dataLayer.push({event: event, ...extra});
+      
+      // Webhook (sendBeacon para não bloquear)
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(WEBHOOK, new Blob([JSON.stringify(payload)], {type:'application/json'}));
+      } else {
+        fetch(WEBHOOK, {method:'POST', headers:{'Content-Type':'application/json'}, mode:'no-cors', body:JSON.stringify(payload)});
+      }
+    }
     
-    ph.addEventListener('input',function(e){
-      var v=e.target.value.replace(/\D/g,'').slice(0,11);
-      e.target.value=v.length?v.length<=2?'('+v:'('+v.slice(0,2)+') '+v.slice(2):'';
+    // Evento: viewpage
+    track('viewpage', {page_title: document.title});
+    
+    // Back button trap
+    history.pushState(null, '', location.href);
+    window.addEventListener('popstate', function(e) {
+      history.pushState(null, '', location.href);
+      showExitPopup();
     });
     
-    function show(n){
+    // Exit intent (desktop)
+    document.addEventListener('mouseout', function(e) {
+      if (e.clientY < 10 && !popupShown) showExitPopup();
+    });
+    
+    function showExitPopup() {
+      if (popupShown) return;
+      popupShown = true;
+      document.getElementById('exitPopup').classList.add('show');
+      track('exit_intent', {trigger: 'back_or_mouse'});
+    }
+    
+    function show(n) {
       document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active')});
       document.querySelector('.step[data-step="'+n+'"]').classList.add('active');
-      if(n<=4)document.querySelector('.progress-dot[data-step="'+n+'"]').classList.add('active');
-      if(n===5)document.querySelector('.progress').style.display='none';
-    }
-    
-    function next(c,k,v){
-      // Evento: start_quiz (apenas no primeiro clique)
-      if(!quizStarted){
-        quizStarted = true;
-        dataLayer.push({
-          'event': 'start_quiz',
-          'quiz_step': 1,
-          'quiz_answer': v
+      
+      if (n <= 3) {
+        document.getElementById('progress').style.display = 'flex';
+        document.querySelectorAll('.progress-dot').forEach(function(dot, i) {
+          if (i < n) dot.classList.add('active');
         });
-      }
-      
-      D[k]=v;
-      show(c+1);
-    }
-    
-    function validatePhone(){
-      var v=ph.value.replace(/\D/g,'');
-      if(v.length<10||v.length>11){er.style.display='block';ph.style.borderColor='#d32f2f';return}
-      er.style.display='none';ph.style.borderColor='#F7B500';D.whatsapp=v;show(4);
-    }
-    
-    function send(){
-      ld.classList.add('show');
-      D.ts=new Date().toISOString();
-      var payload=JSON.stringify(D);
-      if(navigator.sendBeacon){
-        navigator.sendBeacon('https://n8n-n8n.sf6dqo.easypanel.host/webhook/quiz-google',new Blob([payload],{type:'application/json'}));
-        setTimeout(function(){show(5)},400);
-      }else{
-        fetch('https://n8n-n8n.sf6dqo.easypanel.host/webhook/quiz-google',{method:'POST',headers:{'Content-Type':'application/json'},mode:'no-cors',body:payload}).finally(function(){show(5)});
+      } else {
+        document.getElementById('progress').style.display = 'none';
       }
     }
     
-    function go(){
-      // Evento: click_to_checkout (antes de redirecionar)
-      dataLayer.push({
-        'event': 'click_to_checkout',
-        'quiz_completed': true,
-        'whatsapp_captured': D.whatsapp ? true : false
-      });
+    function next(c, k, v) {
+      D[k] = v;
       
-      // Pequeno delay para garantir que o evento seja enviado antes do redirect
-      setTimeout(function(){
-        var p=new URLSearchParams(D.utms);
-        p.set('reseller_slug','diegorox2');
-        location.href='https://pixdomilhao.com.br/?'+p.toString();
-      }, 150);
+      if (!quizStarted) {
+        quizStarted = true;
+        track('start_quiz', {step: 1, question: k, answer: v});
+      } else {
+        track('quiz_answer', {step: c, question: k, answer: v});
+      }
+      
+      show(c + 1);
+    }
+    
+    function showLoading() {
+      track('view_prizes', {step: 3});
+      show(4);
+      
+      setTimeout(function() {
+        show(5);
+        startTimer();
+        track('view_bonus', {step: 5});
+      }, 2000);
+    }
+    
+    function startTimer() {
+      var sec = 299;
+      var el = document.getElementById('timer');
+      
+      setInterval(function() {
+        var m = Math.floor(sec / 60);
+        var s = sec % 60;
+        el.textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+        if (sec > 0) sec--;
+      }, 1000);
+    }
+    
+    function goCheckout(source) {
+      track('click_to_checkout', {source: source, quiz_completed: true});
+      
+      document.getElementById('exitPopup').classList.remove('show');
+      
+      setTimeout(function() {
+        var p = new URLSearchParams(D.utms);
+        p.set('reseller_slug', 'diegorox2');
+        location.href = 'https://pixdomilhao.com.br/?' + p.toString();
+      }, 200);
     }
   </script>
 </body>
